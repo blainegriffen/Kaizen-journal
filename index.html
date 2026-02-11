@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Kaizen Journal</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0a0a0a" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="title">Daily Kaizen</div>
+      <div class="subtitle">2–5 minutes. One improvement. Single timeline.</div>
+    </div>
+    <button id="btnExport" class="btn ghost" title="Export TXT/CSV">Export</button>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="today">Today</button>
+    <button class="tab" data-tab="timeline">Timeline</button>
+    <button class="tab" data-tab="review">Weekly Review</button>
+    <button class="tab" data-tab="library">Kaizen Library</button>
+    <button class="tab" data-tab="settings">Settings</button>
+  </nav>
+
+  <main class="container">
+    <!-- TODAY -->
+    <section id="tab-today" class="panel active">
+      <div class="row between">
+        <h2 id="todayTitle">Today</h2>
+        <div class="row gap-sm">
+          <button id="btnPrevDay" class="btn ghost" title="Previous day">←</button>
+          <button id="btnNextDay" class="btn ghost" title="Next day">→</button>
+          <button id="btnGoToday" class="btn" title="Go to today">Today</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="label">Lenses (optional)</div>
+        <div class="hint">Tag what was relevant today—skip the rest.</div>
+        <div id="domainChips" class="chips"></div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div class="label">What happened (facts only)</div>
+          <div class="hint">Facts = what a camera could record. Bullets encouraged.</div>
+          <textarea id="facts" placeholder="Example: Slept 6h. Skipped gym. 3 meetings. 20-min walk."></textarea>
+        </div>
+
+        <div class="card">
+          <div class="label">What worked</div>
+          <div class="hint">What helped? Actions, environments, choices. 1–3 bullets.</div>
+          <textarea id="worked" placeholder="Example: Phone in drawer → better focus. Protein breakfast. 10-min pause."></textarea>
+        </div>
+
+        <div class="card">
+          <div class="label">What didn’t</div>
+          <div class="hint">No blame. Just signals. Be specific.</div>
+          <textarea id="didnt" placeholder="Example: Opened email first → lost morning. Skipped walk → slump."></textarea>
+        </div>
+
+        <div class="card">
+          <div class="row between">
+            <div>
+              <div class="label">One small improvement (test next time)</div>
+              <div class="hint">One thing. Small enough to actually do.</div>
+            </div>
+            <button id="btnMakeSmaller" class="btn ghost">Make smaller</button>
+          </div>
+
+          <textarea id="improvementText" placeholder="Example: Before email, do 10 minutes of top-priority work."></textarea>
+
+          <div class="row between wrap">
+            <div class="label">Assign lenses (optional)</div>
+            <div class="row gap-sm">
+              <button id="btnUseFromLibrary" class="btn ghost">Use from Library</button>
+            </div>
+          </div>
+          <div id="improvementDomainChips" class="chips"></div>
+
+          <div id="improvementValidation" class="validation"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row between">
+          <div>
+            <div class="label">Lens notes (optional)</div>
+            <div class="hint">Domains are lenses, not separate sections. Keep it observable/operational.</div>
+          </div>
+          <button id="btnAddLensNote" class="btn ghost">Add lens note</button>
+        </div>
+        <div id="lensNotes" class="lensNotes"></div>
+      </div>
+
+      <div class="card">
+        <div class="label">Quick signals (optional)</div>
+        <div class="hint">Just enough for pattern recognition. Skip anytime.</div>
+        <div class="signals">
+          <label class="signal">
+            <span>Sleep quality</span>
+            <select id="sleepQuality">
+              <option value="">—</option>
+              <option value="1">1 (low)</option>
+              <option value="2">2</option>
+              <option value="3">3 (ok)</option>
+              <option value="4">4</option>
+              <option value="5">5 (great)</option>
+            </select>
+          </label>
+          <label class="signal"><input type="checkbox" id="movementDone"> Movement</label>
+          <label class="signal"><input type="checkbox" id="deepWorkDone"> Deep work</label>
+          <label class="signal"><input type="checkbox" id="spiritualPracticeDone"> Spiritual practice</label>
+        </div>
+      </div>
+
+      <div class="row between">
+        <div class="row gap-sm">
+          <label class="row gap-sm">
+            <input type="checkbox" id="completed">
+            <span>Completed</span>
+          </label>
+          <span id="saveStatus" class="muted"></span>
+        </div>
+        <button id="btnSave" class="btn primary">Save</button>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="tab-timeline" class="panel">
+      <div class="row between wrap">
+        <h2>Timeline</h2>
+        <div class="row gap-sm wrap">
+          <input id="searchBox" class="input" placeholder="Search entries…" />
+          <div id="timelineDomainFilters" class="chips"></div>
+        </div>
+      </div>
+      <div id="timelineList" class="list"></div>
+    </section>
+
+    <!-- WEEKLY REVIEW -->
+    <section id="tab-review" class="panel">
+      <div class="row between wrap">
+        <h2>Weekly Review</h2>
+        <div class="row gap-sm">
+          <button id="btnPrevWeek" class="btn ghost">←</button>
+          <button id="btnNextWeek" class="btn ghost">→</button>
+          <button id="btnThisWeek" class="btn">This week</button>
+        </div>
+      </div>
+      <div id="reviewRange" class="muted"></div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="label">Improvements tested</div>
+          <div id="reviewImprovements" class="list compact"></div>
+        </div>
+
+        <div class="card">
+          <div class="label">Most common “worked” themes</div>
+          <div id="reviewWorked" class="pillList"></div>
+        </div>
+
+        <div class="card">
+          <div class="label">Most common “didn’t” themes</div>
+          <div id="reviewDidnt" class="pillList"></div>
+        </div>
+
+        <div class="card">
+          <div class="label">Pattern hints</div>
+          <div class="hint">Lightweight, non-judgy signals.</div>
+          <div id="reviewPatterns" class="list compact"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIBRARY -->
+    <section id="tab-library" class="panel">
+      <div class="row between wrap">
+        <h2>Kaizen Library</h2>
+        <div class="row gap-sm">
+          <button id="btnAddToLibrary" class="btn">Add current improvement</button>
+        </div>
+      </div>
+      <div class="hint">Reuse or iterate past improvements. Mark kept / rejected / needs more testing.</div>
+      <div id="libraryList" class="list"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="tab-settings" class="panel">
+      <h2>Settings</h2>
+      <div class="card">
+        <div class="label">Privacy</div>
+        <div class="hint">This app stores your journal locally on this device (browser storage). No accounts, no server.</div>
+        <div class="row gap-sm wrap">
+          <button id="btnBackupJSON" class="btn">Export backup (JSON)</button>
+          <button id="btnImportJSON" class="btn ghost">Import backup (JSON)</button>
+          <input type="file" id="importFile" accept="application/json" style="display:none" />
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="label">Danger zone</div>
+        <div class="hint">Clears all local journal data from this device/browser.</div>
+        <button id="btnWipe" class="btn danger">Wipe all data</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Simple modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modalCard">
+      <div class="row between">
+        <div id="modalTitle" class="modalTitle">Modal</div>
+        <button id="modalClose" class="btn ghost">Close</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
