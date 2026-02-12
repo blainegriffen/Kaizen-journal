@@ -140,7 +140,7 @@ function bindEls() {
     "btnExport","btnPrevDay","btnNextDay","btnGoToday","btnMakeSmaller","btnUseFromLibrary",
     "btnAddLensNote","btnSave","saveStatus","todayTitle",
     "facts","worked","didnt","improvementText","improvementValidation",
-    "sleepQuality","movementDone","deepWorkDone","spiritualPracticeDone","completed",
+    "sleepQuality","movementDone","deepWorkDone","spiritualPracticeDone","mentalEmotionalDone","completed",
     "domainChips","improvementDomainChips","lensNotes",
     "searchBox","timelineList","timelineDomainFilters",
     "btnPrevWeek","btnNextWeek","btnThisWeek","reviewRange","reviewImprovements","reviewWorked","reviewDidnt","reviewPatterns",
@@ -893,3 +893,4 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
