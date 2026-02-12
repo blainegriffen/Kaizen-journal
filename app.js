@@ -8,7 +8,7 @@ const APP = {
   domains: [
     { key: "Health/Fitness", short: "Health" },
     { key: "Work", short: "Work" },
-    { key: "Mental/Emotional Health", short: "Mental" },
+    { key: "Mental/Emotional Health", short: "Mental/Emotional" },
     { key: "Spiritual/Inner Life", short: "Spiritual" },
   ],
   storageKeys: {
@@ -104,11 +104,13 @@ function defaultEntryFor(dateISO) {
     },
     lensNotes: {}, // domainKey -> text
     quickSignals: {
-      sleepQuality: "",
-      movementDone: false,
-      deepWorkDone: false,
-      spiritualPracticeDone: false
+    sleepQuality: "",
+    movementDone: false,
+    deepWorkDone: false,
+    spiritualPracticeDone: false,
+    mentalEmotionalDone: false
     },
+
     completed: false,
     createdAt: now,
     updatedAt: now
@@ -194,6 +196,7 @@ function renderToday() {
   els.movementDone.checked = !!entry.quickSignals?.movementDone;
   els.deepWorkDone.checked = !!entry.quickSignals?.deepWorkDone;
   els.spiritualPracticeDone.checked = !!entry.quickSignals?.spiritualPracticeDone;
+  els.mentalEmotionalDone.checked = !!entry.quickSignals?.mentalEmotionalDone;
 
   els.completed.checked = !!entry.completed;
 
@@ -218,7 +221,7 @@ function renderDomainChips(container, selectedArray, onChange, allowEmptyLabel=f
 }
 
 function lensPrompt(domainKey) {
-  if (domainKey === "Mental/Emotional Health") {
+  if (domainKey === "Mental/Emotional") {
     return "Behavioral: What did you DO when stress showed up? Any pause/boundary/regulating action?";
   }
   if (domainKey === "Spiritual/Inner Life") {
@@ -318,6 +321,7 @@ function wireTodayInputs() {
     entry.quickSignals.movementDone = els.movementDone.checked;
     entry.quickSignals.deepWorkDone = els.deepWorkDone.checked;
     entry.quickSignals.spiritualPracticeDone = els.spiritualPracticeDone.checked;
+    entry.quickSignals.mentalEmotionalDone = els.mentalEmotionalDone.checked;
 
     entry.completed = els.completed.checked;
 
@@ -334,6 +338,7 @@ function wireTodayInputs() {
     els.movementDone.addEventListener(evt, autoSave);
     els.deepWorkDone.addEventListener(evt, autoSave);
     els.spiritualPracticeDone.addEventListener(evt, autoSave);
+    els.mentalEmotionalDone.addEventListener(evt, autoSave);
     els.completed.addEventListener(evt, autoSave);
   });
 
