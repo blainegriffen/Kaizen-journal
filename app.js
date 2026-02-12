@@ -205,9 +205,11 @@ function renderToday() {
 }
 
 function renderDomainChips(container, selectedArray, onChange, allowEmptyLabel=false) {
+  if (!container) return;                 // <- guard: prevents crash if IDs mismatch
+  const domains = (APP && APP.domains) ? APP.domains : [];
   container.innerHTML = "";
   const selected = new Set(selectedArray || []);
-  APP.domains.forEach(d => {
+  domains.forEach(d => {
     const b = document.createElement("button");
     b.className = "chip" + (selected.has(d.key) ? " on" : "");
     b.textContent = d.short;
@@ -219,6 +221,7 @@ function renderDomainChips(container, selectedArray, onChange, allowEmptyLabel=f
     container.appendChild(b);
   });
 }
+
 
 function lensPrompt(domainKey) {
   if (domainKey === "Mental/Emotional") {
@@ -893,5 +896,6 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
 
