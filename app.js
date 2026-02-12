@@ -5,12 +5,12 @@
 
 const APP = {
   version: "v1",
-  domains: [
-    { key: "Health/Fitness", short: "Health" },
-    { key: "Work", short: "Work" },
-    { key: "Mental/Emotional Health", short: "Mental/Emotional" },
-    { key: "Spiritual/Inner Life", short: "Spiritual" },
-  ],
+ domains: [
+  { key: "Health/Fitness", short: "Health" },
+  { key: "Work", short: "Work" },
+  { key: "Mental/Emotional", short: "Mental/Emotional" },
+  { key: "Spiritual/Inner Life", short: "Spiritual" },
+],
   storageKeys: {
     entries: "kaizen_entries_v1",
     library: "kaizen_library_v1",
@@ -893,4 +893,5 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+
 
