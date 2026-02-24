@@ -5,12 +5,12 @@
 
 const APP = {
   version: "v1",
- domains: [
-  { key: "Health/Fitness", short: "Health" },
-  { key: "Work", short: "Work" },
-  { key: "Mental/Emotional", short: "Mental/Emotional" },
-  { key: "Spiritual/Inner Life", short: "Spiritual" },
-],
+  domains: [
+    { key: "Health/Fitness", short: "Health" },
+    { key: "Work", short: "Work" },
+    { key: "Mental/Emotional Health", short: "Mental/Emotional" },
+    { key: "Spiritual/Inner Life", short: "Spiritual" },
+  ],
   storageKeys: {
     entries: "kaizen_entries_v1",
     library: "kaizen_library_v1",
@@ -140,7 +140,7 @@ function bindEls() {
     "btnExport","btnPrevDay","btnNextDay","btnGoToday","btnMakeSmaller","btnUseFromLibrary",
     "btnAddLensNote","btnSave","saveStatus","todayTitle",
     "facts","worked","didnt","improvementText","improvementValidation",
-    "sleepQuality","movementDone","deepWorkDone","spiritualPracticeDone","mentalEmotionalDone","completed",
+    "sleepQuality","movementDone","deepWorkDone","spiritualPracticeDone","completed",
     "domainChips","improvementDomainChips","lensNotes",
     "searchBox","timelineList","timelineDomainFilters",
     "btnPrevWeek","btnNextWeek","btnThisWeek","reviewRange","reviewImprovements","reviewWorked","reviewDidnt","reviewPatterns",
@@ -205,11 +205,9 @@ function renderToday() {
 }
 
 function renderDomainChips(container, selectedArray, onChange, allowEmptyLabel=false) {
-  if (!container) return;                 // <- guard: prevents crash if IDs mismatch
-  const domains = (APP && APP.domains) ? APP.domains : [];
   container.innerHTML = "";
   const selected = new Set(selectedArray || []);
-  domains.forEach(d => {
+  APP.domains.forEach(d => {
     const b = document.createElement("button");
     b.className = "chip" + (selected.has(d.key) ? " on" : "");
     b.textContent = d.short;
@@ -221,7 +219,6 @@ function renderDomainChips(container, selectedArray, onChange, allowEmptyLabel=f
     container.appendChild(b);
   });
 }
-
 
 function lensPrompt(domainKey) {
   if (domainKey === "Mental/Emotional") {
@@ -896,6 +893,3 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
-
-
-
